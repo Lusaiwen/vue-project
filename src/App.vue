@@ -1,12 +1,45 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <el-container id="app">
+    <el-header height="200" style="padding: 0">
+      <lib-header></lib-header>
+    </el-header>
+    <el-main style="overflow: hidden">
+      <div class="container">
+        <div class="con">
+          <!-- <keep-alive> -->
+            <router-view></router-view>
+          <!-- </keep-alive> -->
+        </div>
+      </div>
+    </el-main>
+    <el-footer>
+      <lib-footer></lib-footer>
+    </el-footer>
+  </el-container>
 </template>
+
+<script>
+import LibHeader from '@/components/Header'
+import LibFooter from '@/components/Footer'
+import { mapState } from 'vuex'
+export default {
+  mounted() {
+    this.$store.dispatch('loginUser/whoami');
+    this.$store.dispatch('BookStore/getBooks');
+  },
+  data() {
+    return {}
+  },
+  computed: {
+    ...mapState('loginUser', ['data'])
+  },
+  methods: {},
+  components: {
+    LibHeader,
+    LibFooter,
+  },
+}
+</script>
 
 <style>
 #app {
@@ -14,19 +47,30 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  /* overflow-x: hidden; */
+  /* overflow: ; */
+  width: 100%;
+  margin: 0 auto;
 }
 
-#nav {
-  padding: 30px;
+html,
+body {
+  background-color: #f4f4f4;
+  width: 100%;
+  overflow-x: hidden;
+  /* overflow-y: hidden; */
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+.con {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
